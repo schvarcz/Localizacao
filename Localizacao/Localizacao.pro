@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     landmark.cpp \
     imagem.cpp \
     paletacores.cpp \
-    filtroParticulas.cpp
+    filtroParticulas.cpp \
+    sivia.cpp
 
 HEADERS  += mainwindow.h \
     iboolean.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     landmark.h \
     imagem.h \
     paletacores.h \
-    filtroParticulas.h
+    filtroParticulas.h \
+    sivia.h
 
 FORMS    += mainwindow.ui
 

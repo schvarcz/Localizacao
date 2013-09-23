@@ -42,7 +42,7 @@ struct transponder{
 //#define mapaMaxZ 10
 //#define NRO_TRANSPONDERS 8
 
-#define EPSILON 0.5
+#define EPSILON 0.05
 
 #define TEMPO_LEITURAS 1 //*1=uma leitura a cada 1s /0.1 =uma leitura a cada 0.1s
 #define LEITURAS_POR_TEMPO_LEITURAS 10 //10 = uma leitura por segundo
@@ -50,8 +50,11 @@ struct transponder{
 //#define SIGMA_FACTOR 0.5
 #define SIGMA_FACTOR_VEL 5      //influencia junto com STD_VEL_DOPPLER para achar o erro na velocidade
 #define SIGMA_FACTOR_ORI 1      //influencia junto com STD_ORIENTATION para achar o erro na orientacao
+#define SIGMA_FACTOR_TRA 6      //influencia junto com STD_DIST_TRANSP para achar o erro na dist dos transponders
 #define STD_ORIENTATION 0.02    //desvio padrão dado na simulacao
 #define STD_VEL_DOPPLER 0.04    //desvio padrão dado na simulacao
+#define STD_DIST_TRANSP 0.3    //desvio padrão dado na simulacao
+
 #define ERRO_DIST_TRANSPONDER 2.0
 #define TAMANHO_POPULACAO 1000
 #define DESVIO_PADRAO_PESO_PARTICULAS 25 //ou um desvio alto, ou usa soma nos pesos, ou um desvio baixo mas com uma população tamanho monstro

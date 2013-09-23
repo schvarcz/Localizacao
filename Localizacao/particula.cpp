@@ -52,14 +52,6 @@ int Particula::naCaixa(double xi, double xs, double yi, double ys, double zi, do
 void Particula::modeloMovimento2(double vx, double vy, double vz, double phi, double theta, double psi, double mvAngx, double mvAngy, double mvAngz){
     //USA ANGULOS DE EULER (PHI THETA PSI)
 
-    double /*erros*/
-            alf1=0.1,
-            alf2=0.1,
-            alf3=0.1,
-            alf4=0.1,
-            alf5=0.1,
-            alf6=0.1;
-
     phi=this->yawPitchRoll.x+mvAngx;
     theta=this->yawPitchRoll.y+mvAngy;
     psi=this->yawPitchRoll.z+mvAngz;
