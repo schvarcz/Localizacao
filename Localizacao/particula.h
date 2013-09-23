@@ -5,8 +5,8 @@
 #include "configuracaoes.h"
 #include <QDebug>
 #include "landmark.h"
-#include "interval.h"
-#include "box.h"
+//#include "interval.h"
+//#include "box.h"
 //using namespace std;
 
 class Particula
@@ -27,9 +27,9 @@ public:
     double fRand(double fMin, double fMax);
     void sample_motion_model_velocity(double v, double w, double x, double y, double th);
     double calcularPeso(QVector<transponder> transpVistos ,QVector<Landmark> localizacaoLandmarks, double limXmin,double limXmax,double limYmin,double limYmax,double limZmin,double limZmax);
-    int noConjunto(QVector <box> caixas);
-    void modeloMovimento(double vx, double vy, double vz, double wx, double wy, double wz);//com velocidade angular
-    int naCaixa(double xi, double xs, double yi, double ys, double zi, double zs);
+    //int noConjunto(QVector <box> caixas);
+    //void modeloMovimento(double vx, double vy, double vz, double wx, double wy, double wz);//com velocidade angular
+    //int naCaixa(double xi, double xs, double yi, double ys, double zi, double zs);
     void modeloMovimento2(double vx, double vy, double vz, double phi, double theta, double psi, double mvAngx, double mvAngy, double mvAngz);//com angulos euler
 
 

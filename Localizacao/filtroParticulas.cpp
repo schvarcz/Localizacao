@@ -1,5 +1,7 @@
 #include "filtroParticulas.h"
 
+using namespace std;
+
 FiltroParticulas::FiltroParticulas()
 {
 }

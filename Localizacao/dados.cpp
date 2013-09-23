@@ -18,134 +18,23 @@ void Dados::localizacaoLandmarks(QVector<Landmark> & localizacao){
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         qDebug()<<"Problema: não abriu o "<<dataset;
 
+        QTextStream in(&file);
+        while (!in.atEnd())
+        {
+            QString line = in.readLine();
+            line=line.trimmed();
+            QStringList list =line.split(";");
 
-    QTextStream in(&file);
-    while (!in.atEnd())
-    {
-        QString line = in.readLine();
-        line=line.trimmed();
-        QStringList list =line.split(";");
+            if(!QString(list[0]).contains("#")){//se não forem linhas comentada
+                int count=0;
+                Landmark l;
+                l.posicao.x=list[count].toDouble();count++;
+                l.posicao.y=list[count].toDouble();count++;
+                l.posicao.z=list[count].toDouble();
+                localizacao.push_back(l);
 
-        if(!QString(list[0]).contains("#")){//se não forem linhas comentada
-            int count=0;
-            Landmark l;
-            l.posicao.x=list[count].toDouble();count++;
-            l.posicao.y=list[count].toDouble();count++;
-            l.posicao.z=list[count].toDouble();
-            localizacao.push_back(l);
-
+        }
     }
-    }
-
-
-    //INFORMAR A LOCALIZAÇÃO DOS LANDMARKS
-
-    //2D-4Transponders-Circle.res1607
-    //    Landmark l1;
-    //    l1.posicao.x=18;
-    //    l1.posicao.y=-30;
-    //    l1.posicao.z=3;
-    //    l1.id=1;
-    //    localizacao.push_back(l1);
-
-    //    Landmark l2;
-    //    l2.posicao.x=-7;
-    //    l2.posicao.y=12;
-    //    l2.posicao.z=17;
-    //    l2.id=2;
-    //    localizacao.push_back(l2);
-
-    //    Landmark l3;
-    //    l3.posicao.x=0;
-    //    l3.posicao.y=20;
-    //    l3.posicao.z=5;
-    //    l3.id=3;
-    //    localizacao.push_back(l3);
-
-    //    Landmark l4;
-    //    l4.posicao.x=-27;
-    //    l4.posicao.y=-20;
-    //    l4.posicao.z=10;
-    //    l1.id=4;
-    //    localizacao.push_back(l4);
-
-
-    //inst1
-    /*Landmark l1;
-    l1.posicao.x=-54.845;
-    l1.posicao.y= 52.115;
-    l1.posicao.z=-26.181;
-    l1.id=1;
-    localizacao.push_back(l1);
-    Landmark l2;
-    l2.posicao.x=-36.739;
-    l2.posicao.y= -0.684;
-    l2.posicao.z=-27.752;
-    l2.id=2;
-    localizacao.push_back(l2);
-    Landmark l3;
-    l3.posicao.x= 22.738;
-    l3.posicao.y= 43.308;
-    l3.posicao.z=-29.530;
-    l3.id=3;
-    localizacao.push_back(l3);
-    Landmark l4;
-    l4.posicao.x=-70.747;
-    l4.posicao.y= 50.364;
-    l4.posicao.z=-27.836;
-    l1.id=4;
-    localizacao.push_back(l4);
-*/
-
-    //        //inst2
-    //        Landmark l1;
-    //        l1.posicao.x= 0;
-    //        l1.posicao.y= 0;
-    //        l1.posicao.z=-10;
-    //        l1.id=1;
-    //        localizacao.push_back(l1);
-    //        Landmark l2;
-    //        l2.posicao.x= 60;
-    //        l2.posicao.y= 0;
-    //        l2.posicao.z=-30;
-    //        l2.id=2;
-    //        localizacao.push_back(l2);
-    //        Landmark l3;
-    //        l3.posicao.x= 30;
-    //        l3.posicao.y= 30;
-    //        l3.posicao.z=-50;
-    //        l3.id=3;
-    //        localizacao.push_back(l3);
-    //        Landmark l4;
-    //        l4.posicao.x= 0;
-    //        l4.posicao.y= 60;
-    //        l4.posicao.z=-30;
-    //        l4.id=4;
-    //        localizacao.push_back(l4);
-    //        Landmark l5;
-    //        l5.posicao.x= 60;
-    //        l5.posicao.y= 60;
-    //        l5.posicao.z=-10;
-    //        l5.id=5;
-    //        localizacao.push_back(l5);
-    //        Landmark l6;
-    //        l6.posicao.x= 30;
-    //        l6.posicao.y= 90;
-    //        l6.posicao.z=-50;
-    //        l6.id=6;
-    //        localizacao.push_back(l6);
-    //        Landmark l7;
-    //        l7.posicao.x= 0;
-    //        l7.posicao.y= 120;
-    //        l7.posicao.z=-10;
-    //        l7.id=7;
-    //        localizacao.push_back(l7);
-    //        Landmark l8;
-    //        l8.posicao.x= 60;
-    //        l8.posicao.y= 120;
-    //        l8.posicao.z=-30;
-    //        l8.id=8;
-    //        localizacao.push_back(l8);
 }
 
 void Dados::carregarArquivo(QVector <xyz> & poseXYZ,

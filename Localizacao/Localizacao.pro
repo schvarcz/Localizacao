@@ -12,10 +12,8 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    interval.cpp \
     iboolean.cpp \
     dados.cpp \
-    box.cpp \
     particula.cpp \
     landmark.cpp \
     imagem.cpp \
@@ -23,11 +21,9 @@ SOURCES += main.cpp\
     filtroParticulas.cpp
 
 HEADERS  += mainwindow.h \
-    interval.h \
     iboolean.h \
     dados.h \
     configuracaoes.h \
-    box.h \
     particula.h \
     sivia.h \
     landmark.h \

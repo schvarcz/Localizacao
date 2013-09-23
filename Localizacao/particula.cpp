@@ -33,7 +33,7 @@ double Particula::calcularPeso(QVector<transponder> transpVistos ,QVector<Landma
     return this->peso;
 }
 
-int Particula::noConjunto(QVector<box> caixas){
+/*int Particula::noConjunto(QVector<box> caixas){
     for(int i=0;i<caixas.size();i++){
         if(this->pose.x>caixas[i][1].inf && this->pose.x<caixas[i][1].sup && this->pose.y>caixas[i][2].inf && this->pose.y<caixas[i][2].sup && this->pose.z>caixas[i][3].inf && this->pose.z<caixas[i][3].sup){
             return 1;
@@ -48,7 +48,7 @@ int Particula::naCaixa(double xi, double xs, double yi, double ys, double zi, do
     }
     return 0;
 }
-
+*/
 void Particula::modeloMovimento2(double vx, double vy, double vz, double phi, double theta, double psi, double mvAngx, double mvAngy, double mvAngz){
     //USA ANGULOS DE EULER (PHI THETA PSI)
 

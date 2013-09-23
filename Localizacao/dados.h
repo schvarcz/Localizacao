@@ -2,7 +2,7 @@
 #define DADOS_H
 #include <QVector>
 #include <QFile>
-#include "interval.h"
+//#include "interval.h"
 #include "configuracaoes.h"
 #include "landmark.h"
 class Dados

@@ -4,13 +4,12 @@
 #include "dados.h"
 #include "configuracaoes.h"
 #include "particula.h"
-#include "box.h"
-#include "sivia.h"
+//#include "box.h"
 #include "imagem.h"
 #include <time.h>
 #include <stdlib.h>
 #include "paletacores.h"
-#include "interval.h"
+//#include "interval.h"
 #include "filtroParticulas.h"
 
 #include <iostream>
