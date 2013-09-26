@@ -10,13 +10,14 @@
 #include "configuracaoes.h"
 #include "landmark.h"
 #include "particula.h"
+#include "dados.h"
 
 class FiltroParticulas
 {
 public:
     FiltroParticulas();
     void executarFiltro(QVector <xyz> poseXYZ, QVector <xyz> yawPitchRoll,QVector <xyz> velXYZ,QVector <QVector<transponder> > transponders,QVector <Landmark> landmarksUsados, int idExec);
-    double tempo(clock_t inicio);
+
 
 
 };

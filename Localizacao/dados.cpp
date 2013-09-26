@@ -11,6 +11,20 @@ Dados::Dados()
 
 }
 
+double Dados::tempo(clock_t inicio){
+    clock_t fim;
+    fim=clock();
+    double t=(double)(fim - inicio)/CLOCKS_PER_SEC;
+    return t;
+}
+
+
+std::string Dados::stringalizar(double x)
+{
+    std::ostringstream oss;
+    oss << x;
+    return oss.str();
+}
 void Dados::localizacaoLandmarks(QVector<Landmark> & localizacao){
 
     QString dataset=DATASET_TRANSPONDERS;

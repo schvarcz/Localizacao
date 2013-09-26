@@ -22,6 +22,12 @@ using namespace std;
 
 
 
+std::string stringalizar(double x)
+{
+    std::ostringstream oss;
+    oss << x;
+    return oss.str();
+}
 
 int main(int argc, char *argv[])
 {
@@ -46,36 +52,25 @@ int main(int argc, char *argv[])
 
     srand(time(NULL));
 
-    //FiltroParticulas fp;
-    //fp.executarFiltro(poseXYZ, yawPitchRoll, velXYZ, transponders, landmarksUsados,0);
 
-    Sivia s;
-    QVector <IntervalVector> resultSivia;
-    double _x[3][2]={{mapaMinX,mapaMaxX},{mapaMinY, mapaMaxY},{mapaMinZ,mapaMaxZ}};
-    IntervalVector searchSpace(3,_x);
-    IntervalVector bb(3);
+    for(int i=0;i<1;i++){
 
-    for(int i=0;i<poseXYZ.size();i=i+LEITURAS_POR_TEMPO_LEITURAS){
-        resultSivia=s.execSivia(searchSpace,landmarksUsados,transponders[i]);
-        //searchSpace.clear();
-        //searchSpace=bb;
-        //caminhar caixa
-        qDebug()<<resultSivia.size();
+
+        //qDebug()<<"Iniciar Filtro de Partículas"<<i;
+        //FiltroParticulas fp;
+        //fp.executarFiltro(poseXYZ, yawPitchRoll, velXYZ, transponders, landmarksUsados,i);
+
+
+
+        qDebug()<<"Iniciar SIVIA1"<<i;
+        Sivia s;
+        double _x[3][2]={{mapaMinX,mapaMaxX},{mapaMinY, mapaMaxY},{mapaMinZ,mapaMaxZ}};
+        IntervalVector searchSpace(3,_x);
+        s.executarLocalizacaoSivia1(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+
+
+
     }
-
-
-
-
-
-Imagem im;
-im.carregarImagem("../mapas/mapa1000x1000.bmp");
-im.inicializarPaiter();
-for(int i=0;i<resultSivia.size();i++) {
-    im.desenhaCaixa2(resultSivia[i][0].lb(),resultSivia[i][0].ub(),resultSivia[i][1].lb(),resultSivia[i][1].ub(),Qt::red,Qt::NoBrush);
-    //qDebug()<<resultSivia[i][0].lb()<<resultSivia[i][0].ub()<<resultSivia[i][1].lb()<<resultSivia[i][1].ub();
-}
-im.finalizarPainter();
-im.salvarImagem("../mapas/mapaD.bmp");
 
     qDebug()<<"FIM";
 

@@ -6,19 +6,14 @@ FiltroParticulas::FiltroParticulas()
 {
 }
 
-double FiltroParticulas::tempo(clock_t inicio){
-    clock_t fim;
-    fim=clock();
-    double t=(double)(fim - inicio)/CLOCKS_PER_SEC;
-    return t;
-}
 
-std::string stringalizar(double x)
-{
-    std::ostringstream oss;
-    oss << x;
-    return oss.str();
-}
+
+//std::string stringalizar(double x)
+//{
+//    std::ostringstream oss;
+//    oss << x;
+//    return oss.str();
+//}
 
 void FiltroParticulas::executarFiltro(QVector <xyz> poseXYZ, QVector <xyz> yawPitchRoll,QVector <xyz> velXYZ,QVector <QVector<transponder> > transponders,QVector <Landmark> landmarksUsados, int idExec){
     double conti=0;
@@ -32,6 +27,7 @@ void FiltroParticulas::executarFiltro(QVector <xyz> poseXYZ, QVector <xyz> yawPi
     ofstream logParticulas(nome.c_str());
     nome = PATH_RESULTS + sstr.str() + string("fpDist.csv");
     ofstream logParticulasDist(nome.c_str());
+    Dados d;
 
     logParticulas<<"#melhor.pose.x;melhor.pose.y;melhor.pose.z;melhor.ypr.x;melhor.ypr.y;melhor.ypr.z;pior.pose.x;pior.pose.y;pior.pose.z;pior.ypr.x;pior.ypr.y;pior.ypr.z;media.pose.x;media.pose.y;media.pose.z;media.ypr.x;media.ypr.y;media.ypr.z;\n";
     logParticulasDist<<"#distMelhor;distMedia;\n";
@@ -158,13 +154,13 @@ void FiltroParticulas::executarFiltro(QVector <xyz> poseXYZ, QVector <xyz> yawPi
         double dist=sqrt(pow(poseXYZ[i].x-mp.pose.x,2)+pow(poseXYZ[i].y-mp.pose.y,2)+pow(poseXYZ[i].z-mp.pose.z,2));
         double dist2=sqrt(pow(poseXYZ[i].x-melhorParticula.pose.x,2)+pow(poseXYZ[i].y-melhorParticula.pose.y,2)+pow(poseXYZ[i].z-melhorParticula.pose.z,2));
 
-        logParticulasDist<<stringalizar(dist2)+";"+stringalizar(dist)+";\n";
-        logParticulas<<stringalizar(melhorParticula.pose.x)+";"+stringalizar(melhorParticula.pose.y)+";"+stringalizar(melhorParticula.pose.z)+";"+stringalizar(melhorParticula.yawPitchRoll.x)+";"+stringalizar(melhorParticula.yawPitchRoll.y)+";"+stringalizar(melhorParticula.yawPitchRoll.z)+";"+stringalizar(piorParticula.pose.x)+";"+stringalizar(piorParticula.pose.y)+";"+stringalizar(piorParticula.pose.z)+";"+stringalizar(piorParticula.yawPitchRoll.x)+";"+stringalizar(piorParticula.yawPitchRoll.y)+";"+stringalizar(piorParticula.yawPitchRoll.z)+";"+stringalizar(mp.pose.x)+";"+stringalizar(mp.pose.y)+";"+stringalizar(mp.pose.z)+";"+stringalizar(mp.yawPitchRoll.x)+";"+stringalizar(mp.yawPitchRoll.y)+";"+stringalizar(mp.yawPitchRoll.z)+";"+"\n";
+        logParticulasDist<<d.stringalizar(dist2)+";"+d.stringalizar(dist)+";\n";
+        logParticulas<<d.stringalizar(melhorParticula.pose.x)+";"+d.stringalizar(melhorParticula.pose.y)+";"+d.stringalizar(melhorParticula.pose.z)+";"+d.stringalizar(melhorParticula.yawPitchRoll.x)+";"+d.stringalizar(melhorParticula.yawPitchRoll.y)+";"+d.stringalizar(melhorParticula.yawPitchRoll.z)+";"+d.stringalizar(piorParticula.pose.x)+";"+d.stringalizar(piorParticula.pose.y)+";"+d.stringalizar(piorParticula.pose.z)+";"+d.stringalizar(piorParticula.yawPitchRoll.x)+";"+d.stringalizar(piorParticula.yawPitchRoll.y)+";"+d.stringalizar(piorParticula.yawPitchRoll.z)+";"+d.stringalizar(mp.pose.x)+";"+d.stringalizar(mp.pose.y)+";"+d.stringalizar(mp.pose.z)+";"+d.stringalizar(mp.yawPitchRoll.x)+";"+d.stringalizar(mp.yawPitchRoll.y)+";"+d.stringalizar(mp.yawPitchRoll.z)+";"+"\n";
 
     }//iterações
 
-    logParticulas<<"#Tempo: "+stringalizar(tempo(inicio))+"\n";
-    logParticulas<<"#Inicializacoes do filtro "+stringalizar(nroInicializa);
+    logParticulas<<"#Tempo: "+d.stringalizar(d.tempo(inicio))+"\n";
+    logParticulas<<"#Inicializacoes do filtro "+d.stringalizar(nroInicializa);
     logParticulas<<"\n#Fim";
 
     logParticulas.close();

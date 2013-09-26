@@ -5,7 +5,7 @@
 //#define DATASET "../2D-4Transponders-Circle.res1607.txt";
 #define DATASET "../inst1-t6.log";
 #define DATASET_TRANSPONDERS "../transpondersInst1.log"
-#define MAPA "../mapas/mapa400x400.bmp";
+#define MAPA "../mapas/mapa1000x1000.bmp";
 #define PATH_RESULTS "../resultados/"
 
 
@@ -42,7 +42,7 @@ struct transponder{
 //#define mapaMaxZ 10
 //#define NRO_TRANSPONDERS 8
 
-#define EPSILON 0.05
+#define EPSILON 0.5
 
 #define TEMPO_LEITURAS 1 //*1=uma leitura a cada 1s /0.1 =uma leitura a cada 0.1s
 #define LEITURAS_POR_TEMPO_LEITURAS 10 //10 = uma leitura por segundo
