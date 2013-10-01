@@ -177,3 +177,101 @@ void Sivia::executarLocalizacaoSivia1(IntervalVector searchSpace, QVector<xyz> p
 
 
 }
+
+
+void Sivia::executarLocalizacaoContratores(IntervalVector searchSpace, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
+
+    clock_t inicio=clock();
+
+    std::stringstream sstr;
+    sstr << idExec;
+    string nome = PATH_RESULTS + sstr.str() + string("contratores.csv");
+    ofstream logCaixas(nome.c_str());
+    Dados d;
+
+    logCaixas<<"#minx;maxx;miny;maxy;minz;maxz\n";
+
+
+for(int j=0;j<poseXYZ.size();j=j+LEITURAS_POR_TEMPO_LEITURAS){
+
+    Imagem im;
+    im.carregarImagem("../mapas/mapa1000x1000.bmp");
+    im.inicializarPaiter();
+
+
+    const int N=NRO_TRANSPONDERS;
+
+
+    Interval bX[N];
+    Interval bY[N];
+    Interval bZ[N];
+    Interval bD[N];
+    /* add uncertainty on measurements */
+    for (int i=0; i<N; i++) {
+        bX[i]=Interval(landmarksUsados[i].posicao.x);
+        bY[i]=Interval(landmarksUsados[i].posicao.y);
+        bZ[i]=Interval(landmarksUsados[i].posicao.z);
+        bD[i]=Interval(transponders[j][i].distNoise-(STD_DIST_TRANSP*SIGMA_FACTOR_TRA),transponders[j][i].distNoise+(STD_DIST_TRANSP*SIGMA_FACTOR_TRA));
+    }
+
+
+    //Array <Function> funcs(N);
+    //vector <Function*> fun(N, NULL);
+    Array<Ctc> array(N);
+    //vector<Ctc*> ar(N,NULL);
+
+    Variable x(3);
+    for(int c=0;c<N;c++){
+        Function *fun2 =new Function(x,((sqrt(sqr(x[0]-bX[c])+sqr(x[1]-bY[c])+sqr(x[2]-bZ[c]))-bD[c])));
+        //fun[c]=new Function(x,((sqrt(sqr(x[0]-bX[c])+sqr(x[1]-bY[c])+sqr(x[2]-bZ[c]))-bD[c])));
+        //funcs.set_ref(c, *fun2);
+
+        CtcFwdBwd *ar=new CtcFwdBwd(*fun2);
+
+        //ar[c]=new CtcFwdBwd(*fun2);
+        array.set_ref(c,*ar);
+
+    }
+
+
+
+    im.desenhaCaixa2(searchSpace[0].lb(),searchSpace[0].ub(),searchSpace[1].lb(),searchSpace[1].ub(),Qt::blue,Qt::NoBrush);
+
+    CtcCompo comp(array);
+    CtcFixPoint fix(comp);// O FIX POINT FICA CONTRAINDO ATÉ NÃO MUDAR MAIS SERIA COMO FAZER UM MONTE DE "comp.contract(array);"
+    fix.contract(searchSpace);
+
+
+    double _x[3][2]={{poseXYZ[j].x,poseXYZ[j].x},{poseXYZ[j].y, poseXYZ[j].y},{poseXYZ[j].z,poseXYZ[j].z}};
+    IntervalVector p(3,_x);
+    if(!p.is_subset(searchSpace))
+        qDebug()<<"Robo fora da caixa!!!!!!!!";
+
+
+    logCaixas<<d.stringalizar(searchSpace[0].lb())+";"+d.stringalizar(searchSpace[0].ub())+";"+d.stringalizar(searchSpace[1].lb())+";"+d.stringalizar(searchSpace[1].ub())+";"+d.stringalizar(searchSpace[2].lb())+";"+d.stringalizar(searchSpace[2].ub())+";\n";
+
+//    cout << "box =" << searchSpace << endl;
+
+    im.desenhaCaixa2(searchSpace[0].lb(),searchSpace[0].ub(),searchSpace[1].lb(),searchSpace[1].ub(),Qt::red,Qt::NoBrush);
+
+    //move searchSpace
+    Interval vx((velXYZ[j].xNoise*TEMPO_LEITURAS)-(SIGMA_FACTOR_VEL*STD_VEL_DOPPLER),(velXYZ[j].xNoise*TEMPO_LEITURAS)+(SIGMA_FACTOR_VEL*STD_VEL_DOPPLER));
+    Interval vy((velXYZ[j].yNoise*TEMPO_LEITURAS)-(SIGMA_FACTOR_VEL*STD_VEL_DOPPLER),(velXYZ[j].yNoise*TEMPO_LEITURAS)+(SIGMA_FACTOR_VEL*STD_VEL_DOPPLER));
+    Interval vz((velXYZ[j].zNoise*TEMPO_LEITURAS)-(SIGMA_FACTOR_VEL*STD_VEL_DOPPLER),(velXYZ[j].zNoise*TEMPO_LEITURAS)+(SIGMA_FACTOR_VEL*STD_VEL_DOPPLER));
+    Interval phi  (yawPitchRoll[j].xNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].xNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
+    Interval theta(yawPitchRoll[j].yNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].yNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
+    Interval psi  (yawPitchRoll[j].zNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].zNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
+    moveCaixa( searchSpace,  vx,  vy,  vz,  phi,  theta,  psi);
+
+
+
+   im.desenhaElipse2(poseXYZ[j].x,poseXYZ[j].y,0.5,0.5,Qt::red,Qt::red);
+    im.finalizarPainter();
+    im.salvarImagem("../mapasResult/"+QString::number(j)+".bmp");
+
+
+}
+logCaixas<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
+logCaixas<<"\n#Fim";
+
+}

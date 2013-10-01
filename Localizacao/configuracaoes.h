@@ -48,9 +48,9 @@ struct transponder{
 #define LEITURAS_POR_TEMPO_LEITURAS 10 //10 = uma leitura por segundo
 
 //#define SIGMA_FACTOR 0.5
-#define SIGMA_FACTOR_VEL 5      //influencia junto com STD_VEL_DOPPLER para achar o erro na velocidade
-#define SIGMA_FACTOR_ORI 1      //influencia junto com STD_ORIENTATION para achar o erro na orientacao
-#define SIGMA_FACTOR_TRA 6      //influencia junto com STD_DIST_TRANSP para achar o erro na dist dos transponders
+#define SIGMA_FACTOR_VEL 4      //influencia junto com STD_VEL_DOPPLER para achar o erro na velocidade
+#define SIGMA_FACTOR_ORI 4      //influencia junto com STD_ORIENTATION para achar o erro na orientacao
+#define SIGMA_FACTOR_TRA 4      //influencia junto com STD_DIST_TRANSP para achar o erro na dist dos transponders
 #define STD_ORIENTATION 0.02    //desvio padrão dado na simulacao
 #define STD_VEL_DOPPLER 0.04    //desvio padrão dado na simulacao
 #define STD_DIST_TRANSP 0.3    //desvio padrão dado na simulacao
