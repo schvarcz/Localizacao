@@ -62,17 +62,16 @@ int main(int argc, char *argv[])
 
         //qDebug()<<"Iniciar SIVIA1"<<i;
         Sivia s;
-        //double _x[3][2]={{mapaMinX,mapaMaxX},{mapaMinY, mapaMaxY},{mapaMinZ,mapaMaxZ}};
-        //IntervalVector searchSpace(3,_x);
+        double _x[3][2]={{mapaMinX,mapaMaxX},{mapaMinY, mapaMaxY},{mapaMinZ,mapaMaxZ}};
+        IntervalVector searchSpace(3,_x);
         //s.executarLocalizacaoSivia1(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
 
 
-        double _x[3][2]={{mapaMinX,mapaMaxX},{mapaMinY, mapaMaxY},{mapaMinZ,mapaMaxZ}};
-        IntervalVector searchSpace(3,_x);
+//        s.executarLocalizacaoContratores(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
-        s.executarLocalizacaoContratores(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
+        s.executarLocalizacaoSivia2(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
 
     }

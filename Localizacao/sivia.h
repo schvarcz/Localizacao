@@ -27,6 +27,8 @@ public:
     void moveCaixa(IntervalVector& box, Interval vx, Interval vy, Interval vz, Interval phi, Interval theta, Interval psi);
     void executarLocalizacaoSivia1(IntervalVector searchSpace, QVector <xyz> poseXYZ, QVector <xyz> yawPitchRoll,QVector <xyz> velXYZ, QVector <QVector<transponder> > transponders,QVector <Landmark> landmarksUsados, int idExec);
     void executarLocalizacaoContratores(IntervalVector searchSpace, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec);
+    QVector <IntervalVector> execSiviaContratores(IntervalVector& box, QVector<Landmark> landmarks, QVector<transponder> landmarksDist);
+    void executarLocalizacaoSivia2(IntervalVector searchSpace, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec);
 };
 
 #endif // SIVIA_H
