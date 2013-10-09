@@ -18,7 +18,7 @@ double Particula::sample_normal_distribution(double b){
     return (b/6)*r;
 }
 
-double Particula::calcularPeso(QVector<transponder> transpVistos ,QVector<Landmark> localizacaoLandmarks, double limXmin,double limXmax,double limYmin,double limYmax,double limZmin,double limZmax){
+double Particula::calcularPeso(QVector<transponder> transpVistos ,QVector<Landmark> localizacaoLandmarks){
     double desvio=DESVIO_PADRAO_PESO_PARTICULAS;
     this->peso=1;
     for(int i=0;i<localizacaoLandmarks.size();i++){

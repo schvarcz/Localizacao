@@ -56,7 +56,7 @@ struct transponder{
 #define STD_DIST_TRANSP 0.3    //desvio padrão dado na simulacao
 
 #define ERRO_DIST_TRANSPONDER 2.0
-#define TAMANHO_POPULACAO 1000
+#define TAMANHO_POPULACAO 50
 #define DESVIO_PADRAO_PESO_PARTICULAS 25 //ou um desvio alto, ou usa soma nos pesos, ou um desvio baixo mas com uma população tamanho monstro
 
 

@@ -18,6 +18,8 @@ public:
     FiltroParticulas();
     void executarFiltro(QVector <xyz> poseXYZ, QVector <xyz> yawPitchRoll,QVector <xyz> velXYZ,QVector <QVector<transponder> > transponders,QVector <Landmark> landmarksUsados, int idExec);
 
+    void roleta( QVector <Particula> & populacao);
+
 
 
 };

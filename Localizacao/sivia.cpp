@@ -297,9 +297,9 @@ void Sivia::executarLocalizacaoSivia2(IntervalVector searchSpace, QVector<xyz> p
 
     for(int i=0;i<poseXYZ.size();i=i+LEITURAS_POR_TEMPO_LEITURAS){
 
-            Imagem im;
-            im.carregarImagem("../mapas/mapa1000x1000.bmp");
-            im.inicializarPaiter();
+//            Imagem im;
+//            im.carregarImagem("../mapas/mapa1000x1000.bmp");
+//            im.inicializarPaiter();
 
 
 
@@ -307,7 +307,7 @@ void Sivia::executarLocalizacaoSivia2(IntervalVector searchSpace, QVector<xyz> p
         resultSivia=execSiviaContratores(searchSpace,landmarksUsados,transponders[i]);
         logBB<<d.stringalizar(searchSpace[0].lb())+";"+d.stringalizar(searchSpace[0].ub())+";"+d.stringalizar(searchSpace[1].lb())+";"+d.stringalizar(searchSpace[1].ub())+";"+d.stringalizar(searchSpace[2].lb())+";"+d.stringalizar(searchSpace[2].ub())+";\n";
 
-        im.desenhaCaixa2(searchSpace[0].lb(),searchSpace[0].ub(),searchSpace[1].lb(),searchSpace[1].ub(),Qt::red,Qt::NoBrush);
+//        im.desenhaCaixa2(searchSpace[0].lb(),searchSpace[0].ub(),searchSpace[1].lb(),searchSpace[1].ub(),Qt::red,Qt::NoBrush);
 
         //qDebug()<<searchSpace[0].lb()<<";"<<searchSpace[0].ub()<<";"<<searchSpace[1].lb()<<";"<<searchSpace[1].ub()<<";"<<searchSpace[2].lb()<<";"<<searchSpace[2].ub();
 
@@ -322,15 +322,15 @@ void Sivia::executarLocalizacaoSivia2(IntervalVector searchSpace, QVector<xyz> p
         for(int k=0;k<resultSivia.size();k++){
             logCaixas<<d.stringalizar(resultSivia[k][0].lb())+";"+d.stringalizar(resultSivia[k][0].ub())+";"+d.stringalizar(resultSivia[k][1].lb())+";"+d.stringalizar(resultSivia[k][1].ub())+";"+d.stringalizar(resultSivia[k][2].lb())+";"+d.stringalizar(resultSivia[k][2].ub())+";\n";
 
-            im.desenhaCaixa2(resultSivia[k][0].lb(),resultSivia[k][0].ub(),resultSivia[k][1].lb(),resultSivia[k][1].ub(),Qt::blue,Qt::NoBrush);
+//            im.desenhaCaixa2(resultSivia[k][0].lb(),resultSivia[k][0].ub(),resultSivia[k][1].lb(),resultSivia[k][1].ub(),Qt::blue,Qt::NoBrush);
         }
         logCaixas<<"*\n";
 
 
 
-        im.desenhaElipse2(poseXYZ[i].x,poseXYZ[i].y,0.5,0.5,Qt::black,Qt::black);
-        im.finalizarPainter();
-        im.salvarImagem("../mapasResult/"+QString::number(i)+".bmp");
+//        im.desenhaElipse2(poseXYZ[i].x,poseXYZ[i].y,0.5,0.5,Qt::black,Qt::black);
+//        im.finalizarPainter();
+//        im.salvarImagem("../mapasResult/"+QString::number(i)+".bmp");
 
 
     }

@@ -8,12 +8,23 @@ FiltroParticulas::FiltroParticulas()
 
 
 
-//std::string stringalizar(double x)
-//{
-//    std::ostringstream oss;
-//    oss << x;
-//    return oss.str();
-//}
+void FiltroParticulas::roleta( QVector <Particula> & populacao){
+    QVector <Particula> populacaoAux;
+    std::swap(populacao,populacaoAux);
+    for(int k=0;k<TAMANHO_POPULACAO;k++){
+        int l;
+        double r= (double)rand() / RAND_MAX;
+        l=-1;
+        do{
+            l++;
+            if(l>populacaoAux.size()-1)l=populacaoAux.size()-1;
+            r=r-populacaoAux[l].peso;
+        } while(r>0);
+        populacao.push_back(populacaoAux[l]);
+    }
+}
+
+
 
 void FiltroParticulas::executarFiltro(QVector <xyz> poseXYZ, QVector <xyz> yawPitchRoll,QVector <xyz> velXYZ,QVector <QVector<transponder> > transponders,QVector <Landmark> landmarksUsados, int idExec){
     double conti=0;
@@ -80,7 +91,7 @@ void FiltroParticulas::executarFiltro(QVector <xyz> poseXYZ, QVector <xyz> yawPi
 
             //encontra normalizador
             for(int k=0;k<populacao.size();k++){
-                normalizador += populacao[k].calcularPeso(transponders[i],landmarksUsados,limXmin,limXmax,limYmin,limYmax,limZmin,limZmax);
+                normalizador += populacao[k].calcularPeso(transponders[i],landmarksUsados/*,limXmin,limXmax,limYmin,limYmax,limZmin,limZmax*/);
             }
 
         }
@@ -89,7 +100,7 @@ void FiltroParticulas::executarFiltro(QVector <xyz> poseXYZ, QVector <xyz> yawPi
             for(int k=0;k<populacao.size();k++){
                 populacao[k].modeloMovimento2(velXYZ[i].xNoise,velXYZ[i].yNoise,velXYZ[i].zNoise,yawPitchRoll[i].xNoise,yawPitchRoll[i].yNoise,yawPitchRoll[i].zNoise, (yawPitchRoll[i].xNoise-yawPitchRoll[movAnterior].xNoise) ,(yawPitchRoll[i].yNoise-yawPitchRoll[movAnterior].yNoise),(yawPitchRoll[i].zNoise-yawPitchRoll[movAnterior].zNoise));
                 //SE ELIMINAR, elimina aki para o normalizador ficar certo
-                normalizador += populacao[k].calcularPeso(transponders[i],landmarksUsados,limXmin,limXmax,limYmin,limYmax,limZmin,limZmax);
+                normalizador += populacao[k].calcularPeso(transponders[i],landmarksUsados/*,limXmin,limXmax,limYmin,limYmax,limZmin,limZmax*/);
             }
             movAnterior=i;
         }
@@ -136,19 +147,21 @@ void FiltroParticulas::executarFiltro(QVector <xyz> poseXYZ, QVector <xyz> yawPi
         }
 
         //ROLETA
-        QVector <Particula> populacaoAux;
-        std::swap(populacao,populacaoAux);
-        for(int k=0;k<TAMANHO_POPULACAO;k++){
-            int l;
-            double r= (double)rand() / RAND_MAX;
-            l=-1;
-            do{
-                l++;
-                if(l>populacaoAux.size()-1)l=populacaoAux.size()-1;
-                r=r-populacaoAux[l].peso;
-            } while(r>0);
-            populacao.push_back(populacaoAux[l]);
-        }
+
+        roleta(populacao);
+//        QVector <Particula> populacaoAux;
+//        std::swap(populacao,populacaoAux);
+//        for(int k=0;k<TAMANHO_POPULACAO;k++){
+//            int l;
+//            double r= (double)rand() / RAND_MAX;
+//            l=-1;
+//            do{
+//                l++;
+//                if(l>populacaoAux.size()-1)l=populacaoAux.size()-1;
+//                r=r-populacaoAux[l].peso;
+//            } while(r>0);
+//            populacao.push_back(populacaoAux[l]);
+//        }
 
 
         double dist=sqrt(pow(poseXYZ[i].x-mp.pose.x,2)+pow(poseXYZ[i].y-mp.pose.y,2)+pow(poseXYZ[i].z-mp.pose.z,2));

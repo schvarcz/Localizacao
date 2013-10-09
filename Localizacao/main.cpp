@@ -12,6 +12,7 @@
 //#include "interval.h"
 #include "filtroParticulas.h"
 #include "sivia.h"
+#include "hibrido.h"
 
 #include <iostream>
 #include <fstream>
@@ -71,8 +72,11 @@ int main(int argc, char *argv[])
 //        s.executarLocalizacaoContratores(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
 
-        s.executarLocalizacaoSivia2(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+        //s.executarLocalizacaoSivia2(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
+
+        Hibrido h;
+        h.executarLocalizacaoHibridaContratores(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
     }
 

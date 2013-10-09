@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     imagem.cpp \
     paletacores.cpp \
     filtroParticulas.cpp \
-    sivia.cpp
+    sivia.cpp \
+    hibrido.cpp
 
 HEADERS  += mainwindow.h \
     iboolean.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     imagem.h \
     paletacores.h \
     filtroParticulas.h \
-    sivia.h
+    sivia.h \
+    hibrido.h
 
 FORMS    += mainwindow.ui
 
