@@ -76,7 +76,8 @@ int main(int argc, char *argv[])
 
 
         Hibrido h;
-        h.executarLocalizacaoHibridaContratores(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+        //h.executarLocalizacaoHibridaContratores(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+        h.executarLocalizacaoHibridaSivia1(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
     }
 
