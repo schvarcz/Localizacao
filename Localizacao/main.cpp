@@ -54,30 +54,35 @@ int main(int argc, char *argv[])
     srand(time(NULL));
 
 
-    for(int i=0;i<1;i++){
+    for(int i=1;i<10;i++){
 
 
-        //qDebug()<<"Iniciar Filtro de Partículas"<<i;
-        //FiltroParticulas fp;
-        //fp.executarFiltro(poseXYZ, yawPitchRoll, velXYZ, transponders, landmarksUsados,i);
+        qDebug()<<"Iniciar Filtro de Particulas"<<i;
+        FiltroParticulas fp;
+        fp.executarFiltro(poseXYZ, yawPitchRoll, velXYZ, transponders, landmarksUsados,i);
 
-        //qDebug()<<"Iniciar SIVIA1"<<i;
-        Sivia s;
+
+        //Sivia s;
         double _x[3][2]={{mapaMinX,mapaMaxX},{mapaMinY, mapaMaxY},{mapaMinZ,mapaMaxZ}};
         IntervalVector searchSpace(3,_x);
-        //s.executarLocalizacaoSivia1(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
+//        qDebug()<<"Iniciar SIVIA1"<<i;
+//        s.executarLocalizacaoSivia1(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
-
+//        qDebug()<<"Iniciar Contratores"<<i;
 //        s.executarLocalizacaoContratores(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
-
-        //s.executarLocalizacaoSivia2(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
-
+//        qDebug()<<"Iniciar SIVIA2"<<i;
+//        s.executarLocalizacaoSivia2(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
         Hibrido h;
-        //h.executarLocalizacaoHibridaContratores(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
-        //h.executarLocalizacaoHibridaSivia1(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+        qDebug()<<"Iniciar Hibrido Contratores"<<i;
+        h.executarLocalizacaoHibridaContratores(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+
+        qDebug()<<"Iniciar Hibrido SIVIA1"<<i;
+        h.executarLocalizacaoHibridaSivia1(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+
+        qDebug()<<"Iniciar Hibrido SIVIA2"<<i;
         h.executarLocalizacaoHibridaSivia2(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
     }

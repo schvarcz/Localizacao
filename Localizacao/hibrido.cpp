@@ -206,10 +206,10 @@ void Hibrido::executarLocalizacaoHibridaContratores(IntervalVector searchSpace, 
 
         //cout<<endl;
     }
-    logParticulas<<"#Tempo: "+d.stringalizar(d.tempo(inicio))+"\n";
+    logParticulas<<"#Tempo(s): "+d.stringalizar(d.tempo(inicio))+"\n";
     logParticulas<<"#Inicializacoes do filtro "+d.stringalizar(reinicializaFP);
     logParticulas<<"\n#Fim";
-    logCaixas<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
+    logCaixas<<"#Tempo(s): "+d.stringalizar(d.tempo(inicio));
     logCaixas<<"\n#Fim";
     logParticulas.close();
     logCaixas.close();
@@ -225,8 +225,8 @@ void Hibrido::executarLocalizacaoHibridaSivia1(IntervalVector searchSpace, QVect
     sstr << idExec;
     string nome = PATH_RESULTS + sstr.str() + string("hibridoSivia1BB.csv");
     ofstream logCaixasBB(nome.c_str());
-    nome = PATH_RESULTS + sstr.str() + string("hibridoSivia1Caixas.csv");
-    ofstream logCaixas(nome.c_str());
+//    nome = PATH_RESULTS + sstr.str() + string("hibridoSivia1Caixas.csv");
+//    ofstream logCaixas(nome.c_str());
     nome = PATH_RESULTS + sstr.str() + string("hibridoSivia1FP.csv");
     ofstream logParticulas(nome.c_str());
 
@@ -240,13 +240,13 @@ void Hibrido::executarLocalizacaoHibridaSivia1(IntervalVector searchSpace, QVect
     int reinicializaFP=0;
 
 
-    logCaixas<<"#minx;maxx;miny;maxy;minz;maxz\n";
+//    logCaixas<<"#minx;maxx;miny;maxy;minz;maxz\n";
     logCaixasBB<<"#minx;maxx;miny;maxy;minz;maxz\n";
     logParticulas<<"#melhor.pose.x;melhor.pose.y;melhor.pose.z;melhor.ypr.x;melhor.ypr.y;melhor.ypr.z;pior.pose.x;pior.pose.y;pior.pose.z;pior.ypr.x;pior.ypr.y;pior.ypr.z;media.pose.x;media.pose.y;media.pose.z;media.ypr.x;media.ypr.y;media.ypr.z;\n";
 
     QVector <IntervalVector> resultSivia;
     for(int j=0;j<poseXYZ.size();j=j+LEITURAS_POR_TEMPO_LEITURAS){
-
+if(j%100==0)qDebug()<<"Etapa"<<j;
 //                cout<<j<<endl;
 //                Imagem im;
 //                im.carregarImagem("../mapas/mapa1000x1000.bmp");
@@ -449,11 +449,11 @@ void Hibrido::executarLocalizacaoHibridaSivia1(IntervalVector searchSpace, QVect
 
 
 
-        for(int l=0;l<resultSivia.size();l++){
-            logCaixas<<d.stringalizar(resultSivia[l][0].lb())+";"+d.stringalizar(resultSivia[l][0].ub())+";"+d.stringalizar(resultSivia[l][1].lb())+";"+d.stringalizar(resultSivia[l][1].ub())+";"+d.stringalizar(resultSivia[l][2].lb())+";"+d.stringalizar(resultSivia[l][2].ub())+";\n";
-//            im.desenhaCaixa2(resultSivia[l][0].lb(),resultSivia[l][0].ub(),resultSivia[l][1].lb(),resultSivia[l][1].ub(),Qt::lightGray,Qt::NoBrush);
-        }
-        logCaixas<<"*\n";
+//        for(int l=0;l<resultSivia.size();l++){
+//            logCaixas<<d.stringalizar(resultSivia[l][0].lb())+";"+d.stringalizar(resultSivia[l][0].ub())+";"+d.stringalizar(resultSivia[l][1].lb())+";"+d.stringalizar(resultSivia[l][1].ub())+";"+d.stringalizar(resultSivia[l][2].lb())+";"+d.stringalizar(resultSivia[l][2].ub())+";\n";
+////            im.desenhaCaixa2(resultSivia[l][0].lb(),resultSivia[l][0].ub(),resultSivia[l][1].lb(),resultSivia[l][1].ub(),Qt::lightGray,Qt::NoBrush);
+//        }
+//        logCaixas<<"*\n";
 
 //        PaletaCores paletaCor;
 //        double v1 = piorParticula.peso;
@@ -474,15 +474,15 @@ void Hibrido::executarLocalizacaoHibridaSivia1(IntervalVector searchSpace, QVect
 
         //cout<<endl;
     }
-    logParticulas<<"#Tempo: "+d.stringalizar(d.tempo(inicio))+"\n";
+    logParticulas<<"#Tempo(s): "+d.stringalizar(d.tempo(inicio))+"\n";
     logParticulas<<"#Inicializacoes do filtro "+d.stringalizar(reinicializaFP);
     logParticulas<<"\n#Fim";
-    logCaixas<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
-    logCaixas<<"\n#Fim";
-    logCaixasBB<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
+//    logCaixas<<"#Tempo(s): "+d.stringalizar(d.tempo(inicio));
+//    logCaixas<<"\n#Fim";
+    logCaixasBB<<"#Tempo(s): "+d.stringalizar(d.tempo(inicio));
     logCaixasBB<<"\n#Fim";
     logParticulas.close();
-    logCaixas.close();
+//    logCaixas.close();
     logCaixasBB.close();
 
 
@@ -496,10 +496,11 @@ void Hibrido::executarLocalizacaoHibridaSivia2(IntervalVector searchSpace, QVect
     clock_t inicio=clock();
     std::stringstream sstr;
     sstr << idExec;
-    string nome = PATH_RESULTS + sstr.str() + string("hibridoSivia2BB.csv");
+    string nome;
+    nome = PATH_RESULTS + sstr.str() + string("hibridoSivia2BB.csv");
     ofstream logCaixasBB(nome.c_str());
-    nome = PATH_RESULTS + sstr.str() + string("hibridoSivia2Caixas.csv");
-    ofstream logCaixas(nome.c_str());
+//    nome = PATH_RESULTS + sstr.str() + string("hibridoSivia2Caixas.csv");
+//    ofstream logCaixas(nome.c_str());
     nome = PATH_RESULTS + sstr.str() + string("hibridoSivia2FP.csv");
     ofstream logParticulas(nome.c_str());
 
@@ -513,12 +514,13 @@ void Hibrido::executarLocalizacaoHibridaSivia2(IntervalVector searchSpace, QVect
     int reinicializaFP=0;
 
 
-    logCaixas<<"#minx;maxx;miny;maxy;minz;maxz\n";
+//    logCaixas<<"#minx;maxx;miny;maxy;minz;maxz\n";
     logCaixasBB<<"#minx;maxx;miny;maxy;minz;maxz\n";
     logParticulas<<"#melhor.pose.x;melhor.pose.y;melhor.pose.z;melhor.ypr.x;melhor.ypr.y;melhor.ypr.z;pior.pose.x;pior.pose.y;pior.pose.z;pior.ypr.x;pior.ypr.y;pior.ypr.z;media.pose.x;media.pose.y;media.pose.z;media.ypr.x;media.ypr.y;media.ypr.z;\n";
 
     QVector <IntervalVector> resultSivia;
     for(int j=0;j<poseXYZ.size();j=j+LEITURAS_POR_TEMPO_LEITURAS){
+        if(j%100==0)qDebug()<<"Etapa"<<j;
 
 //                cout<<j<<endl;
 //                Imagem im;
@@ -709,11 +711,11 @@ void Hibrido::executarLocalizacaoHibridaSivia2(IntervalVector searchSpace, QVect
 
 
 
-        for(int l=0;l<resultSivia.size();l++){
-            logCaixas<<d.stringalizar(resultSivia[l][0].lb())+";"+d.stringalizar(resultSivia[l][0].ub())+";"+d.stringalizar(resultSivia[l][1].lb())+";"+d.stringalizar(resultSivia[l][1].ub())+";"+d.stringalizar(resultSivia[l][2].lb())+";"+d.stringalizar(resultSivia[l][2].ub())+";\n";
-//            im.desenhaCaixa2(resultSivia[l][0].lb(),resultSivia[l][0].ub(),resultSivia[l][1].lb(),resultSivia[l][1].ub(),Qt::lightGray,Qt::NoBrush);
-        }
-        logCaixas<<"*\n";
+//        for(int l=0;l<resultSivia.size();l++){
+//            logCaixas<<d.stringalizar(resultSivia[l][0].lb())+";"+d.stringalizar(resultSivia[l][0].ub())+";"+d.stringalizar(resultSivia[l][1].lb())+";"+d.stringalizar(resultSivia[l][1].ub())+";"+d.stringalizar(resultSivia[l][2].lb())+";"+d.stringalizar(resultSivia[l][2].ub())+";\n";
+////            im.desenhaCaixa2(resultSivia[l][0].lb(),resultSivia[l][0].ub(),resultSivia[l][1].lb(),resultSivia[l][1].ub(),Qt::lightGray,Qt::NoBrush);
+//        }
+//        logCaixas<<"*\n";
 
 //        PaletaCores paletaCor;
 //        double v1 = piorParticula.peso;
@@ -734,15 +736,15 @@ void Hibrido::executarLocalizacaoHibridaSivia2(IntervalVector searchSpace, QVect
 
         //cout<<endl;
     }
-    logParticulas<<"#Tempo: "+d.stringalizar(d.tempo(inicio))+"\n";
+    logParticulas<<"#Tempo(s): "+d.stringalizar(d.tempo(inicio))+"\n";
     logParticulas<<"#Inicializacoes do filtro "+d.stringalizar(reinicializaFP);
     logParticulas<<"\n#Fim";
-    logCaixas<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
-    logCaixas<<"\n#Fim";
-    logCaixasBB<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
+//    logCaixas<<"#Tempo(s): "+d.stringalizar(d.tempo(inicio));
+//    logCaixas<<"\n#Fim";
+    logCaixasBB<<"#Tempo(s): "+d.stringalizar(d.tempo(inicio));
     logCaixasBB<<"\n#Fim";
     logParticulas.close();
-    logCaixas.close();
+//    logCaixas.close();
     logCaixasBB.close();
 
 

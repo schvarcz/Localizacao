@@ -235,19 +235,21 @@ void Sivia::executarLocalizacaoSivia1(IntervalVector searchSpace, QVector<xyz> p
 
     std::stringstream sstr;
     sstr << idExec;
-    string nome = PATH_RESULTS + sstr.str() + string("sivia1caixas.csv");
-    ofstream logCaixas(nome.c_str());
+    string nome;
+//    nome = PATH_RESULTS + sstr.str() + string("sivia1caixas.csv");
+//    ofstream logCaixas(nome.c_str());
     nome = PATH_RESULTS + sstr.str() + string("sivia1bb.csv");
     ofstream logBB(nome.c_str());
     Dados d;
 
-    logCaixas<<"#o sinal '*' respresenta a divisao entre os conj de caixas por iteracao \n#minx;maxx;miny;maxy;minz;maxz\n";
+//    logCaixas<<"#o sinal '*' respresenta a divisao entre os conj de caixas por iteracao \n#minx;maxx;miny;maxy;minz;maxz\n";
     logBB<<"#minx;maxx;miny;maxy;minz;maxz\n";
 
 
     QVector <IntervalVector> resultSivia;
 
     for(int i=0;i<poseXYZ.size();i=i+LEITURAS_POR_TEMPO_LEITURAS){
+        if(i%100==0)qDebug()<<"Etapa"<<i;
         resultSivia.clear();
         resultSivia=execSivia(searchSpace,landmarksUsados,transponders[i]);
         logBB<<d.stringalizar(searchSpace[0].lb())+";"+d.stringalizar(searchSpace[0].ub())+";"+d.stringalizar(searchSpace[1].lb())+";"+d.stringalizar(searchSpace[1].ub())+";"+d.stringalizar(searchSpace[2].lb())+";"+d.stringalizar(searchSpace[2].ub())+";\n";
@@ -262,15 +264,16 @@ void Sivia::executarLocalizacaoSivia1(IntervalVector searchSpace, QVector<xyz> p
         Interval psi  (yawPitchRoll[i].zNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[i].zNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         moveCaixa(searchSpace,vx,vy,vz,phi,theta,psi);
 
-        for(int k=0;k<resultSivia.size();k++){
-            logCaixas<<d.stringalizar(resultSivia[k][0].lb())+";"+d.stringalizar(resultSivia[k][0].ub())+";"+d.stringalizar(resultSivia[k][1].lb())+";"+d.stringalizar(resultSivia[k][1].ub())+";"+d.stringalizar(resultSivia[k][2].lb())+";"+d.stringalizar(resultSivia[k][2].ub())+";\n";
-        }
-        logCaixas<<"*\n";
+//        for(int k=0;k<resultSivia.size();k++){
+//            logCaixas<<d.stringalizar(resultSivia[k][0].lb())+";"+d.stringalizar(resultSivia[k][0].ub())+";"+d.stringalizar(resultSivia[k][1].lb())+";"+d.stringalizar(resultSivia[k][1].ub())+";"+d.stringalizar(resultSivia[k][2].lb())+";"+d.stringalizar(resultSivia[k][2].ub())+";\n";
+//        }
+//        logCaixas<<"*\n";
 
     }
 
-    logCaixas<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
-    logCaixas<<"\n#Fim";
+//    logCaixas<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
+//    logCaixas<<"\n#Fim";
+    logBB<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
     logBB<<"\n#Fim";
 
 
@@ -283,13 +286,14 @@ void Sivia::executarLocalizacaoSivia2(IntervalVector searchSpace, QVector<xyz> p
 
     std::stringstream sstr;
     sstr << idExec;
-    string nome = PATH_RESULTS + sstr.str() + string("sivia2caixas.csv");
-    ofstream logCaixas(nome.c_str());
+    string nome;
+    nome = PATH_RESULTS + sstr.str() + string("sivia2caixas.csv");
+    //ofstream logCaixas(nome.c_str());
     nome = PATH_RESULTS + sstr.str() + string("sivia2bb.csv");
     ofstream logBB(nome.c_str());
     Dados d;
 
-    logCaixas<<"#o sinal '*' respresenta a divisao entre os conj de caixas por iteracao \n#minx;maxx;miny;maxy;minz;maxz\n";
+    //logCaixas<<"#o sinal '*' respresenta a divisao entre os conj de caixas por iteracao \n#minx;maxx;miny;maxy;minz;maxz\n";
     logBB<<"#minx;maxx;miny;maxy;minz;maxz\n";
 
 
@@ -302,7 +306,7 @@ void Sivia::executarLocalizacaoSivia2(IntervalVector searchSpace, QVector<xyz> p
 //            im.inicializarPaiter();
 
 
-
+if(i%100==0)qDebug()<<"Etapa"<<i;
         resultSivia.clear();
         resultSivia=execSiviaContratores(searchSpace,landmarksUsados,transponders[i]);
         logBB<<d.stringalizar(searchSpace[0].lb())+";"+d.stringalizar(searchSpace[0].ub())+";"+d.stringalizar(searchSpace[1].lb())+";"+d.stringalizar(searchSpace[1].ub())+";"+d.stringalizar(searchSpace[2].lb())+";"+d.stringalizar(searchSpace[2].ub())+";\n";
@@ -319,12 +323,11 @@ void Sivia::executarLocalizacaoSivia2(IntervalVector searchSpace, QVector<xyz> p
         Interval psi  (yawPitchRoll[i].zNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[i].zNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         moveCaixa(searchSpace,vx,vy,vz,phi,theta,psi);
 
-        for(int k=0;k<resultSivia.size();k++){
-            logCaixas<<d.stringalizar(resultSivia[k][0].lb())+";"+d.stringalizar(resultSivia[k][0].ub())+";"+d.stringalizar(resultSivia[k][1].lb())+";"+d.stringalizar(resultSivia[k][1].ub())+";"+d.stringalizar(resultSivia[k][2].lb())+";"+d.stringalizar(resultSivia[k][2].ub())+";\n";
-
+//        for(int k=0;k<resultSivia.size();k++){
+//            logCaixas<<d.stringalizar(resultSivia[k][0].lb())+";"+d.stringalizar(resultSivia[k][0].ub())+";"+d.stringalizar(resultSivia[k][1].lb())+";"+d.stringalizar(resultSivia[k][1].ub())+";"+d.stringalizar(resultSivia[k][2].lb())+";"+d.stringalizar(resultSivia[k][2].ub())+";\n";
 //            im.desenhaCaixa2(resultSivia[k][0].lb(),resultSivia[k][0].ub(),resultSivia[k][1].lb(),resultSivia[k][1].ub(),Qt::blue,Qt::NoBrush);
-        }
-        logCaixas<<"*\n";
+//        }
+//        logCaixas<<"*\n";
 
 
 
@@ -335,8 +338,9 @@ void Sivia::executarLocalizacaoSivia2(IntervalVector searchSpace, QVector<xyz> p
 
     }
 
-    logCaixas<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
-    logCaixas<<"\n#Fim";
+//    logCaixas<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
+//    logCaixas<<"\n#Fim";
+    logBB<<"#Tempo: "+d.stringalizar(d.tempo(inicio));
     logBB<<"\n#Fim";
 
 

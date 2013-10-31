@@ -36,12 +36,12 @@ void FiltroParticulas::executarFiltro(QVector <xyz> poseXYZ, QVector <xyz> yawPi
     sstr << idExec;
     string nome = PATH_RESULTS + sstr.str() + string("fp.csv");
     ofstream logParticulas(nome.c_str());
-    nome = PATH_RESULTS + sstr.str() + string("fpDist.csv");
-    ofstream logParticulasDist(nome.c_str());
+    //nome = PATH_RESULTS + sstr.str() + string("fpDist.csv");
+    //ofstream logParticulasDist(nome.c_str());
     Dados d;
 
     logParticulas<<"#melhor.pose.x;melhor.pose.y;melhor.pose.z;melhor.ypr.x;melhor.ypr.y;melhor.ypr.z;pior.pose.x;pior.pose.y;pior.pose.z;pior.ypr.x;pior.ypr.y;pior.ypr.z;media.pose.x;media.pose.y;media.pose.z;media.ypr.x;media.ypr.y;media.ypr.z;\n";
-    logParticulasDist<<"#distMelhor;distMedia;\n";
+    //logParticulasDist<<"#distMelhor;distMedia;\n";
 
 
     int iteracoes=poseXYZ.size();
@@ -164,15 +164,15 @@ void FiltroParticulas::executarFiltro(QVector <xyz> poseXYZ, QVector <xyz> yawPi
 //        }
 
 
-        double dist=sqrt(pow(poseXYZ[i].x-mp.pose.x,2)+pow(poseXYZ[i].y-mp.pose.y,2)+pow(poseXYZ[i].z-mp.pose.z,2));
-        double dist2=sqrt(pow(poseXYZ[i].x-melhorParticula.pose.x,2)+pow(poseXYZ[i].y-melhorParticula.pose.y,2)+pow(poseXYZ[i].z-melhorParticula.pose.z,2));
+        //double dist=sqrt(pow(poseXYZ[i].x-mp.pose.x,2)+pow(poseXYZ[i].y-mp.pose.y,2)+pow(poseXYZ[i].z-mp.pose.z,2));
+        //double dist2=sqrt(pow(poseXYZ[i].x-melhorParticula.pose.x,2)+pow(poseXYZ[i].y-melhorParticula.pose.y,2)+pow(poseXYZ[i].z-melhorParticula.pose.z,2));
 
-        logParticulasDist<<d.stringalizar(dist2)+";"+d.stringalizar(dist)+";\n";
+        //logParticulasDist<<d.stringalizar(dist2)+";"+d.stringalizar(dist)+";\n";
         logParticulas<<d.stringalizar(melhorParticula.pose.x)+";"+d.stringalizar(melhorParticula.pose.y)+";"+d.stringalizar(melhorParticula.pose.z)+";"+d.stringalizar(melhorParticula.yawPitchRoll.x)+";"+d.stringalizar(melhorParticula.yawPitchRoll.y)+";"+d.stringalizar(melhorParticula.yawPitchRoll.z)+";"+d.stringalizar(piorParticula.pose.x)+";"+d.stringalizar(piorParticula.pose.y)+";"+d.stringalizar(piorParticula.pose.z)+";"+d.stringalizar(piorParticula.yawPitchRoll.x)+";"+d.stringalizar(piorParticula.yawPitchRoll.y)+";"+d.stringalizar(piorParticula.yawPitchRoll.z)+";"+d.stringalizar(mp.pose.x)+";"+d.stringalizar(mp.pose.y)+";"+d.stringalizar(mp.pose.z)+";"+d.stringalizar(mp.yawPitchRoll.x)+";"+d.stringalizar(mp.yawPitchRoll.y)+";"+d.stringalizar(mp.yawPitchRoll.z)+";"+"\n";
 
     }//iterações
 
-    logParticulas<<"#Tempo: "+d.stringalizar(d.tempo(inicio))+"\n";
+    logParticulas<<"#Tempo(s): "+d.stringalizar(d.tempo(inicio))+"\n";
     logParticulas<<"#Inicializacoes do filtro "+d.stringalizar(nroInicializa);
     logParticulas<<"\n#Fim";
 
