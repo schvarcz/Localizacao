@@ -20,7 +20,6 @@ double Particula::sample_normal_distribution(double b){
 
 double Particula::calcularPeso(QVector<transponder> transpVistos ,QVector<Landmark> localizacaoLandmarks){
     double desvio=DESVIO_PADRAO_PESO_PARTICULAS;
-    double anterior=this->peso;
     this->peso=1;
     for(int i=0;i<localizacaoLandmarks.size();i++){
         //distancia entre a partícula e o transponder
@@ -31,7 +30,6 @@ double Particula::calcularPeso(QVector<transponder> transpVistos ,QVector<Landma
 
     }
 
-    this->peso=this->peso*anterior;
     return this->peso;
 }
 
