@@ -4,7 +4,7 @@ Hibrido::Hibrido()
 {
 }
 
-void Hibrido::executarLocalizacaoHibridaContratores(IntervalVector searchSpace, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
+void Hibrido::executarLocalizacaoHibridaContratores(IntervalVector searchSpace, IntervalVector ambienteInicial, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
 
     clock_t inicio=clock();
     std::stringstream sstr;
@@ -151,7 +151,7 @@ void Hibrido::executarLocalizacaoHibridaContratores(IntervalVector searchSpace, 
         Interval phi  (yawPitchRoll[j].xNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].xNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         Interval theta(yawPitchRoll[j].yNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].yNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         Interval psi  (yawPitchRoll[j].zNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].zNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
-        s.moveCaixa( searchSpace,  vx,  vy,  vz,  phi,  theta,  psi);
+        s.moveCaixa( searchSpace,ambienteInicial,  vx,  vy,  vz,  phi,  theta,  psi);
 
         //fp*************************************************************************
         Particula piorParticula, melhorParticula, mp;
@@ -218,7 +218,7 @@ void Hibrido::executarLocalizacaoHibridaContratores(IntervalVector searchSpace, 
 
 
 
-void Hibrido::executarLocalizacaoHibridaSivia1(IntervalVector searchSpace, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
+void Hibrido::executarLocalizacaoHibridaSivia1(IntervalVector searchSpace, IntervalVector ambienteInicial, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
 
     clock_t inicio=clock();
     std::stringstream sstr;
@@ -410,7 +410,7 @@ if(j%100==0)qDebug()<<"Etapa"<<j;
         Interval phi  (yawPitchRoll[j].xNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].xNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         Interval theta(yawPitchRoll[j].yNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].yNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         Interval psi  (yawPitchRoll[j].zNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].zNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
-        s.moveCaixa( searchSpace,  vx,  vy,  vz,  phi,  theta,  psi);
+        s.moveCaixa( searchSpace, ambienteInicial, vx,  vy,  vz,  phi,  theta,  psi);
 
         //fp*************************************************************************
         Particula piorParticula, melhorParticula, mp;
@@ -491,7 +491,7 @@ if(j%100==0)qDebug()<<"Etapa"<<j;
 
 
 //********************************************************************************************************************
-void Hibrido::executarLocalizacaoHibridaSivia2(IntervalVector searchSpace, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
+void Hibrido::executarLocalizacaoHibridaSivia2(IntervalVector searchSpace, IntervalVector ambienteInicial, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
 
     clock_t inicio=clock();
     std::stringstream sstr;
@@ -672,7 +672,7 @@ void Hibrido::executarLocalizacaoHibridaSivia2(IntervalVector searchSpace, QVect
         Interval phi  (yawPitchRoll[j].xNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].xNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         Interval theta(yawPitchRoll[j].yNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].yNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         Interval psi  (yawPitchRoll[j].zNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].zNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
-        s.moveCaixa( searchSpace,  vx,  vy,  vz,  phi,  theta,  psi);
+        s.moveCaixa( searchSpace, ambienteInicial, vx,  vy,  vz,  phi,  theta,  psi);
 
         //fp*************************************************************************
         Particula piorParticula, melhorParticula, mp;

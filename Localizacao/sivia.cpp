@@ -210,7 +210,7 @@ QVector <IntervalVector> Sivia::execSiviaContratores(IntervalVector& box, QVecto
     return caixas;
 }
 
-void Sivia::moveCaixa(IntervalVector& box, Interval vx, Interval vy, Interval vz, Interval phi, Interval theta, Interval psi){
+void Sivia::moveCaixa(IntervalVector& box, IntervalVector ambienteInicial, Interval vx, Interval vy, Interval vz, Interval phi, Interval theta, Interval psi){
 
     Interval J[6][6];
     J[0][0]= cos(psi)*cos(theta);
@@ -227,9 +227,12 @@ void Sivia::moveCaixa(IntervalVector& box, Interval vx, Interval vy, Interval vz
     box[1]=box[1]+vx*J[1][0]+vy*J[1][1]+vz*J[1][2];
     box[2]=box[2]+vx*J[2][0]+vy*J[2][1]+vz*J[2][2];
 
+
+    box=box&ambienteInicial;
+
     }
 
-void Sivia::executarLocalizacaoSivia1(IntervalVector searchSpace, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
+void Sivia::executarLocalizacaoSivia1(IntervalVector searchSpace, IntervalVector ambienteInicial, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
 
     clock_t inicio=clock();
 
@@ -262,7 +265,7 @@ void Sivia::executarLocalizacaoSivia1(IntervalVector searchSpace, QVector<xyz> p
         Interval phi  (yawPitchRoll[i].xNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[i].xNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         Interval theta(yawPitchRoll[i].yNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[i].yNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         Interval psi  (yawPitchRoll[i].zNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[i].zNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
-        moveCaixa(searchSpace,vx,vy,vz,phi,theta,psi);
+        moveCaixa(searchSpace, ambienteInicial, vx,vy,vz,phi,theta,psi);
 
 //        for(int k=0;k<resultSivia.size();k++){
 //            logCaixas<<d.stringalizar(resultSivia[k][0].lb())+";"+d.stringalizar(resultSivia[k][0].ub())+";"+d.stringalizar(resultSivia[k][1].lb())+";"+d.stringalizar(resultSivia[k][1].ub())+";"+d.stringalizar(resultSivia[k][2].lb())+";"+d.stringalizar(resultSivia[k][2].ub())+";\n";
@@ -280,7 +283,7 @@ void Sivia::executarLocalizacaoSivia1(IntervalVector searchSpace, QVector<xyz> p
 }
 
 
-void Sivia::executarLocalizacaoSivia2(IntervalVector searchSpace, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
+void Sivia::executarLocalizacaoSivia2(IntervalVector searchSpace, IntervalVector ambienteInicial, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
 
     clock_t inicio=clock();
 
@@ -321,7 +324,7 @@ if(i%100==0)qDebug()<<"Etapa"<<i;
         Interval phi  (yawPitchRoll[i].xNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[i].xNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         Interval theta(yawPitchRoll[i].yNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[i].yNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
         Interval psi  (yawPitchRoll[i].zNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[i].zNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
-        moveCaixa(searchSpace,vx,vy,vz,phi,theta,psi);
+        moveCaixa(searchSpace,ambienteInicial,vx,vy,vz,phi,theta,psi);
 
 //        for(int k=0;k<resultSivia.size();k++){
 //            logCaixas<<d.stringalizar(resultSivia[k][0].lb())+";"+d.stringalizar(resultSivia[k][0].ub())+";"+d.stringalizar(resultSivia[k][1].lb())+";"+d.stringalizar(resultSivia[k][1].ub())+";"+d.stringalizar(resultSivia[k][2].lb())+";"+d.stringalizar(resultSivia[k][2].ub())+";\n";
@@ -346,7 +349,7 @@ if(i%100==0)qDebug()<<"Etapa"<<i;
 
 }
 
-void Sivia::executarLocalizacaoContratores(IntervalVector searchSpace, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
+void Sivia::executarLocalizacaoContratores(IntervalVector searchSpace, IntervalVector ambienteInicial, QVector<xyz> poseXYZ, QVector<xyz> yawPitchRoll, QVector<xyz> velXYZ, QVector<QVector<transponder> > transponders, QVector<Landmark> landmarksUsados, int idExec){
 
     clock_t inicio=clock();
 
@@ -428,7 +431,7 @@ for(int j=0;j<poseXYZ.size();j=j+LEITURAS_POR_TEMPO_LEITURAS){
     Interval phi  (yawPitchRoll[j].xNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].xNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
     Interval theta(yawPitchRoll[j].yNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].yNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
     Interval psi  (yawPitchRoll[j].zNoise-(SIGMA_FACTOR_ORI*STD_ORIENTATION),yawPitchRoll[j].zNoise+(SIGMA_FACTOR_ORI*STD_ORIENTATION));
-    moveCaixa( searchSpace,  vx,  vy,  vz,  phi,  theta,  psi);
+    moveCaixa( searchSpace, ambienteInicial, vx,  vy,  vz,  phi,  theta,  psi);
 
 
 

@@ -53,8 +53,23 @@ int main(int argc, char *argv[])
 
     srand(time(NULL));
 
+Dados d;
+     qDebug()<<"Salvando log com posicoes reais... conferir o nome";
+    string nome = PATH_RESULTS + string("logReaisAmbiente1traj1.csv");
+    ofstream logReais(nome.c_str());
+    for(int k=0;k<poseXYZ.size();k=k+LEITURAS_POR_TEMPO_LEITURAS){
+        logReais<<d.stringalizar(poseXYZ[k].x)+";"+d.stringalizar(poseXYZ[k].y)+";"+d.stringalizar(poseXYZ[k].z)+";\n";
+    }
+    logReais.close();
 
-    for(int i=1;i<10;i++){
+//     double _a[3][2]={{10,20},{10, 20},{10,20}};
+//     IntervalVector g(3,_a);
+//     doublle _b[3][2]={{5,15},{5, 15},{5,25}};
+//     IntervalVector b(3,_b);
+//     g=g&b;
+//     cout<<g<<endl;
+
+    for(int i=0;i<10;i++){
 
 
         qDebug()<<"Iniciar Filtro de Particulas"<<i;
@@ -66,24 +81,26 @@ int main(int argc, char *argv[])
         double _x[3][2]={{mapaMinX,mapaMaxX},{mapaMinY, mapaMaxY},{mapaMinZ,mapaMaxZ}};
         IntervalVector searchSpace(3,_x);
 
+        IntervalVector ambienteInicial(3,_x);
+
 //        qDebug()<<"Iniciar SIVIA1"<<i;
-//        s.executarLocalizacaoSivia1(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+//        s.executarLocalizacaoSivia1(searchSpace, ambienteInicial, poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
 //        qDebug()<<"Iniciar Contratores"<<i;
-//        s.executarLocalizacaoContratores(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+//        s.executarLocalizacaoContratores(searchSpace, ambienteInicial, poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
 //        qDebug()<<"Iniciar SIVIA2"<<i;
-//        s.executarLocalizacaoSivia2(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+//        s.executarLocalizacaoSivia2(searchSpace, ambienteInicial, poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
         Hibrido h;
         qDebug()<<"Iniciar Hibrido Contratores"<<i;
-        h.executarLocalizacaoHibridaContratores(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+        h.executarLocalizacaoHibridaContratores(searchSpace,ambienteInicial, poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
         qDebug()<<"Iniciar Hibrido SIVIA1"<<i;
-        h.executarLocalizacaoHibridaSivia1(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+        h.executarLocalizacaoHibridaSivia1(searchSpace, ambienteInicial, poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
         qDebug()<<"Iniciar Hibrido SIVIA2"<<i;
-        h.executarLocalizacaoHibridaSivia2(searchSpace,poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
+        h.executarLocalizacaoHibridaSivia2(searchSpace, ambienteInicial, poseXYZ,yawPitchRoll,velXYZ,transponders,landmarksUsados,i);
 
     }
 

@@ -3,7 +3,7 @@
 #pragma once
 
 
-#define DATASET "../ambiente1trajetoria2.log";
+#define DATASET "../trajetoriasDissertacao/ambiente1traj1.log";
 #define DATASET_TRANSPONDERS "../transpondersAmbiente1.log"
 #define MAPA "../mapas/mapa1000x1000.bmp";
 #define PATH_RESULTS "../resultados/"
@@ -25,10 +25,10 @@ struct transponder{
 //#define DIMENSOES 2
 
 //inst1
-#define mapaMinX -150 //-100
-#define mapaMaxX 160
-#define mapaMinY -160
-#define mapaMaxY 150
+#define mapaMinX -200 //-100
+#define mapaMaxX 200
+#define mapaMinY -200
+#define mapaMaxY 200
 #define mapaMinZ -80 //-40
 #define mapaMaxZ 1
 #define NRO_TRANSPONDERS 1
@@ -55,34 +55,5 @@ struct transponder{
 #define STD_VEL_DOPPLER 0.04    //desvio padrão dado na simulacao
 #define STD_DIST_TRANSP 0.3    //desvio padrão dado na simulacao
 
-//#define ERRO_DIST_TRANSPONDER 2.0
-#define TAMANHO_POPULACAO 500
+#define TAMANHO_POPULACAO 1000
 #define DESVIO_PADRAO_PESO_PARTICULAS 25 //ou um desvio alto, ou usa soma nos pesos, ou um desvio baixo mas com uma população tamanho monstro
-
-
-
-
-//parametros de erro no movimento das partículas em: Particulas::modeloMovimento
-//parametros de erro no movimento da caixa em: Sivia::movimentaCaixa
-
-
-
-
-/*
-//executar sivia e criar caixas?
-#define EXECUTAR_SIVIA 1 // 0 não 1 sim
-
-//executar filtro de partículas e criar uma população
-#define EXECUTAR_FP 1                  // 0 não 1 sim
-
-//distribuir população de partículas no mapa ou nas caixas?
-#define DISPERSA_PARTICULAS 1   //0 NO MAPA OU 1 NAS CAIXAS
-
-//eliminar partículas fora das caixas?
-#define ELIMINAR_PARTICULAS_FORA_CAIXA 2 //0 não 1 sim (no conjunto cinza) 2 sim (na caixa grande)
-
-#define DESENHA 0 //0 não desenha 1 desenha (caixas e partículas)
-*/
-
-
-
