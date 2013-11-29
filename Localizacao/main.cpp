@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
 Dados d;
      qDebug()<<"Salvando log com posicoes reais... conferir o nome";
-    string nome = PATH_RESULTS + string("logReaisAmbiente1traj1.csv");
+    string nome = PATH_RESULTS + string(LOGREAIS);//string("logReaisAmbiente1traj1.csv");
     ofstream logReais(nome.c_str());
     for(int k=0;k<poseXYZ.size();k=k+LEITURAS_POR_TEMPO_LEITURAS){
         logReais<<d.stringalizar(poseXYZ[k].x)+";"+d.stringalizar(poseXYZ[k].y)+";"+d.stringalizar(poseXYZ[k].z)+";\n";

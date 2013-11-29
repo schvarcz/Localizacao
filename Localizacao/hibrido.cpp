@@ -29,6 +29,7 @@ void Hibrido::executarLocalizacaoHibridaContratores(IntervalVector searchSpace, 
 
 
     for(int j=0;j<poseXYZ.size();j=j+LEITURAS_POR_TEMPO_LEITURAS){
+if(j%100==0)qDebug()<<"Etapa"<<j<<"/"<<poseXYZ.size();
 
         //        cout<<j<<endl;
         //        Imagem im;
@@ -60,11 +61,21 @@ void Hibrido::executarLocalizacaoHibridaContratores(IntervalVector searchSpace, 
         }
         CtcCompo comp(array);
         CtcFixPoint fix(comp);// O FIX POINT FICA CONTRAINDO ATÉ NÃO MUDAR MAIS SERIA COMO FAZER UM MONTE DE "comp.contract(array);"
-        fix.contract(searchSpace);
+
+        try{
+            fix.contract(searchSpace);
+        }catch(Exception e){
+            qDebug()<<"Manobra de rapto, contratores";
+            double _x[3][2]={{mapaMinX,mapaMaxX},{mapaMinY, mapaMaxY},{mapaMinZ,mapaMaxZ}};
+            IntervalVector searchSpaceInitial(3,_x);
+            fix.contract(searchSpaceInitial);
+            searchSpace=searchSpaceInitial;
+
+        }
 
         double _x[3][2]={{poseXYZ[j].x,poseXYZ[j].x},{poseXYZ[j].y, poseXYZ[j].y},{poseXYZ[j].z,poseXYZ[j].z}};
         IntervalVector p(3,_x);
-        if(!p.is_subset(searchSpace)) {qDebug()<<"Robo fora da caixa!!!!!!!!";}
+        if(!p.is_subset(searchSpace)) {qDebug()<<"Robo fora da caixa!!!!!!!!"<<poseXYZ[j].xNoise<<poseXYZ[j].yNoise<<poseXYZ[j].zNoise;}
 
         logCaixas<<d.stringalizar(searchSpace[0].lb())+";"+d.stringalizar(searchSpace[0].ub())+";"+d.stringalizar(searchSpace[1].lb())+";"+d.stringalizar(searchSpace[1].ub())+";"+d.stringalizar(searchSpace[2].lb())+";"+d.stringalizar(searchSpace[2].ub())+";\n";
 
@@ -244,9 +255,11 @@ void Hibrido::executarLocalizacaoHibridaSivia1(IntervalVector searchSpace, Inter
     logCaixasBB<<"#minx;maxx;miny;maxy;minz;maxz\n";
     logParticulas<<"#melhor.pose.x;melhor.pose.y;melhor.pose.z;melhor.ypr.x;melhor.ypr.y;melhor.ypr.z;pior.pose.x;pior.pose.y;pior.pose.z;pior.ypr.x;pior.ypr.y;pior.ypr.z;media.pose.x;media.pose.y;media.pose.z;media.ypr.x;media.ypr.y;media.ypr.z;\n";
 
+
+
     QVector <IntervalVector> resultSivia;
     for(int j=0;j<poseXYZ.size();j=j+LEITURAS_POR_TEMPO_LEITURAS){
-if(j%100==0)qDebug()<<"Etapa"<<j;
+if(j%100==0)qDebug()<<"Etapa"<<j<<"/"<<poseXYZ.size();
 //                cout<<j<<endl;
 //                Imagem im;
 //                im.carregarImagem("../mapas/mapa1000x1000.bmp");
@@ -259,6 +272,14 @@ if(j%100==0)qDebug()<<"Etapa"<<j;
         //ai*************************************************************************
         resultSivia.clear();
         resultSivia=s.execSivia(searchSpace,landmarksUsados,transponders[j]);
+        if(resultSivia.size()<1){
+            qDebug()<<"Manobra de rapto, SIVIA1";
+            double _x[3][2]={{mapaMinX,mapaMaxX},{mapaMinY, mapaMaxY},{mapaMinZ,mapaMaxZ}};
+            IntervalVector searchSpaceInitial(3,_x);
+            resultSivia.clear();
+            resultSivia=s.execSivia(searchSpaceInitial,landmarksUsados,transponders[j]);
+            searchSpace=searchSpaceInitial;
+        }
 
         double _x[3][2]={{poseXYZ[j].x,poseXYZ[j].x},{poseXYZ[j].y, poseXYZ[j].y},{poseXYZ[j].z,poseXYZ[j].z}};
         IntervalVector p(3,_x);
@@ -518,9 +539,10 @@ void Hibrido::executarLocalizacaoHibridaSivia2(IntervalVector searchSpace, Inter
     logCaixasBB<<"#minx;maxx;miny;maxy;minz;maxz\n";
     logParticulas<<"#melhor.pose.x;melhor.pose.y;melhor.pose.z;melhor.ypr.x;melhor.ypr.y;melhor.ypr.z;pior.pose.x;pior.pose.y;pior.pose.z;pior.ypr.x;pior.ypr.y;pior.ypr.z;media.pose.x;media.pose.y;media.pose.z;media.ypr.x;media.ypr.y;media.ypr.z;\n";
 
+
     QVector <IntervalVector> resultSivia;
     for(int j=0;j<poseXYZ.size();j=j+LEITURAS_POR_TEMPO_LEITURAS){
-        if(j%100==0)qDebug()<<"Etapa"<<j;
+        if(j%100==0)qDebug()<<"Etapa"<<j<<"/"<<poseXYZ.size();
 
 //                cout<<j<<endl;
 //                Imagem im;
@@ -533,7 +555,23 @@ void Hibrido::executarLocalizacaoHibridaSivia2(IntervalVector searchSpace, Inter
 
         //ai*************************************************************************
         resultSivia.clear();
+
+        try{
+ //qDebug()<<"1";
         resultSivia=s.execSiviaContratores(searchSpace,landmarksUsados,transponders[j]);
+ // qDebug()<<"2";
+        }catch(Exception e){
+            qDebug()<<"Entrou na exception vazia";
+        }
+
+        if(resultSivia.size()<1){
+            qDebug()<<"Manobra de rapto, SIVIA2";
+            double _x[3][2]={{mapaMinX,mapaMaxX},{mapaMinY, mapaMaxY},{mapaMinZ,mapaMaxZ}};
+            IntervalVector searchSpaceInitial(3,_x);
+            resultSivia.clear();
+            resultSivia=s.execSivia(searchSpaceInitial,landmarksUsados,transponders[j]);
+            searchSpace=searchSpaceInitial;
+        }
 
         double _x[3][2]={{poseXYZ[j].x,poseXYZ[j].x},{poseXYZ[j].y, poseXYZ[j].y},{poseXYZ[j].z,poseXYZ[j].z}};
         IntervalVector p(3,_x);

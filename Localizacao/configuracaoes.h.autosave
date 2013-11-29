@@ -9,7 +9,7 @@
 #define PATH_RESULTS "../resultados/amb1traj4/"
 #define LOGREAIS "logReaisAmb1Traj4.csv"
 #define NRO_TRANSPONDERS 2
-
+#define ALCANCE_TRANSP
 struct xyz{
     double x;
     double y;

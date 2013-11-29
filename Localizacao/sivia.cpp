@@ -146,6 +146,7 @@ QVector <IntervalVector> Sivia::execSiviaContratores(IntervalVector& box, QVecto
 
     }
     CtcCompo comp(array);
+
     CtcFixPoint fix(comp);
 
     //******************************************
@@ -162,8 +163,7 @@ QVector <IntervalVector> Sivia::execSiviaContratores(IntervalVector& box, QVecto
         //************CONTRAI CAIXAS*********************************************
 
         int p=1;
-        while(p==1){
-
+        while(p==1 && !L.empty()){
             try{
 
                 fix.contract(Xaux);
@@ -172,9 +172,7 @@ QVector <IntervalVector> Sivia::execSiviaContratores(IntervalVector& box, QVecto
             }catch(Exception e){
                 //qDebug()<<"Caixa vazia";
                 Xaux=L.front();   L.pop_front();
-
             }
-
         }
     //*********************************************************
 
@@ -252,7 +250,7 @@ void Sivia::executarLocalizacaoSivia1(IntervalVector searchSpace, IntervalVector
     QVector <IntervalVector> resultSivia;
 
     for(int i=0;i<poseXYZ.size();i=i+LEITURAS_POR_TEMPO_LEITURAS){
-        if(i%100==0)qDebug()<<"Etapa"<<i;
+        if(i%100==0)qDebug()<<"Etapa"<<i<<"/"<<poseXYZ.size();
         resultSivia.clear();
         resultSivia=execSivia(searchSpace,landmarksUsados,transponders[i]);
         logBB<<d.stringalizar(searchSpace[0].lb())+";"+d.stringalizar(searchSpace[0].ub())+";"+d.stringalizar(searchSpace[1].lb())+";"+d.stringalizar(searchSpace[1].ub())+";"+d.stringalizar(searchSpace[2].lb())+";"+d.stringalizar(searchSpace[2].ub())+";\n";
@@ -309,7 +307,7 @@ void Sivia::executarLocalizacaoSivia2(IntervalVector searchSpace, IntervalVector
 //            im.inicializarPaiter();
 
 
-if(i%100==0)qDebug()<<"Etapa"<<i;
+        if(i%100==0)qDebug()<<"Etapa"<<i<<"/"<<poseXYZ.size();
         resultSivia.clear();
         resultSivia=execSiviaContratores(searchSpace,landmarksUsados,transponders[i]);
         logBB<<d.stringalizar(searchSpace[0].lb())+";"+d.stringalizar(searchSpace[0].ub())+";"+d.stringalizar(searchSpace[1].lb())+";"+d.stringalizar(searchSpace[1].ub())+";"+d.stringalizar(searchSpace[2].lb())+";"+d.stringalizar(searchSpace[2].ub())+";\n";
